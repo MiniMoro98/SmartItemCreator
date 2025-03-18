@@ -1,0 +1,4 @@
+name: SmartItemCreator
+version: '1.0.0'
+main: it.moro.smartitem.SmartItemCreator
+api-version: '1.21'
