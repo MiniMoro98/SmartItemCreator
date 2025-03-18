@@ -1,4 +1,9 @@
 name: SmartItemCreator
-version: '1.0.0'
+version: ${project.version}
 main: it.moro.smartitem.SmartItemCreator
-api-version: '1.21'
+api-version: '1.13'
+commands:
+  smartitemcreator:
+    description: Un comando di test
+    usage: /smartitemcreator
+    aliases: [sic, smartitem]
