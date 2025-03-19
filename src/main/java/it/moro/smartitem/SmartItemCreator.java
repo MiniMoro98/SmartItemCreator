@@ -17,9 +17,11 @@ public final class SmartItemCreator extends JavaPlugin {
         instance = this;
         createDataFolder();
         loadFiles();
-        Commands commands = new Commands();
+        Commands commands = new Commands(this);
         Objects.requireNonNull(getCommand("sic")).setExecutor(commands);
         Objects.requireNonNull(getCommand("smartitemcreator")).setExecutor(commands);
+        Commands events = new Commands(this);
+        getServer().getPluginManager().registerEvents(events, this);
         getLogger().info("\u001B[32mAbilitato!\u001B[0m");
     }
 

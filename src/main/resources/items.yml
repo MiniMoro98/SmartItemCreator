@@ -1,17 +1,42 @@
 items:
-  spada_magica:
+  magic_sword:
     material: DIAMOND_SWORD
     amount: 1
-    display_name: "§bSpada Magica"
+    display_name: "§bMagic Sword"
     lore:
-      - "§7Una spada leggendaria"
-      - "§eForgia degli Antichi"
+      - "§7The legendary sword"
+      - "§eForge of the Ancients"
     enchantments:
       DAMAGE_ALL: 5
       FIRE_ASPECT: 2
     hide-enchants: false
 
-  mela_dorata:
+  golden_apple:
     material: GOLDEN_APPLE
-    amount: 3
-    display_name: "§6Mela d'Oro"
+    enchantments:
+      DAMAGE_ALL: 5
+      FIRE_ASPECT: 2
+
+  head:
+    material: PLAYER_HEAD
+    head_url: "http://textures.minecraft.net/texture/d8147495c53cff5d52525cfec3be7067c5e434644f9f3c3e6865198306f979a4"
+    amount: 1
+    display_name: "&a&lCustom Head"
+    lore:
+      - "&eLore"
+      - "&5Example"
+
+  speed_potion:
+    material: POTION #SPLASH_POTION, LINGERING_POTION
+    amount: 1
+    color: white
+    display_name: "&dPotion of Speed"
+    lore:
+      - "&7It makes you faster!"
+    potion_effects:
+      SPEED:
+        duration: 400 #20 seconds (20 ticks = 1 second)
+        amplifier: 1
+      JUMP_BOOST:
+        duration: 200 #10 seconds
+        amplifier: 2
