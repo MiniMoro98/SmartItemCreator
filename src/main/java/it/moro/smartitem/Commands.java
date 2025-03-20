@@ -25,20 +25,24 @@ public class Commands implements CommandExecutor, TabCompleter, Listener {
             sender.sendMessage("§cSolo i giocatori possono eseguire questo comando!");
             return true;
         }
-        if (command.getName().equalsIgnoreCase("sic") || command.getName().equalsIgnoreCase("smartitemcreator")) {
-            if (args.length == 0) {
-                player.sendMessage("§cUso corretto: /sic <nome_oggetto>");
-                return false;
+        if(player.hasPermission("smartitemcreator.cmd")) {
+            if (command.getName().equalsIgnoreCase("sic") || command.getName().equalsIgnoreCase("smartitemcreator")) {
+                if (args.length == 0) {
+                    player.sendMessage("§cUso corretto: /sic <nome_oggetto>");
+                    return false;
+                }
+                String itemName = args[0].toLowerCase();
+                ItemStack item = Items.getItem(itemName);
+                if (item != null) {
+                    player.getInventory().addItem(item);
+                    player.sendMessage("§aHai ricevuto l'oggetto: " + itemName);
+                } else {
+                    player.sendMessage("§cOggetto non trovato: " + itemName);
+                }
+                return true;
             }
-            String itemName = args[0].toLowerCase();
-            ItemStack item = Items.getItem(itemName);
-            if (item != null) {
-                player.getInventory().addItem(item);
-                player.sendMessage("§aHai ricevuto l'oggetto: " + itemName);
-            } else {
-                player.sendMessage("§cOggetto non trovato: " + itemName);
-            }
-            return true;
+        } else {
+            player.sendMessage("Non hai il permesso per questo comando!");
         }
         return false;
     }
@@ -46,15 +50,18 @@ public class Commands implements CommandExecutor, TabCompleter, Listener {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(command.getName().equalsIgnoreCase("sic") || command.getName().equalsIgnoreCase("smartitemcreator")) {
-            List<String> completions = new ArrayList<>();
-            if (args.length == 1) {
-                for (String itemName : Items.getItemNames()) {
-                    if (itemName.toLowerCase().startsWith(args[0].toLowerCase())) {
-                        completions.add(itemName);
+            Player player = (Player) sender;
+            if(player.hasPermission("smartitemcreator.cmd")) {
+                List<String> completions = new ArrayList<>();
+                if (args.length == 1) {
+                    for (String itemName : Items.getItemNames()) {
+                        if (itemName.toLowerCase().startsWith(args[0].toLowerCase())) {
+                            completions.add(itemName);
+                        }
                     }
                 }
+                return completions;
             }
-            return completions;
         }
         return null;
     }

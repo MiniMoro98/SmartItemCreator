@@ -204,8 +204,12 @@ public class Items {
 
     public static Color getColorFromString(String colorStr) {
         try {
-            if (colorStr.startsWith("#")) {
-                return Color.fromRGB(Integer.parseInt(colorStr.substring(1), 16));
+            if (colorStr.contains(",")) {
+                String[] rgb = colorStr.split(",");
+                int r = Integer.parseInt(rgb[0].trim());
+                int g = Integer.parseInt(rgb[1].trim());
+                int b = Integer.parseInt(rgb[2].trim());
+                return Color.fromRGB(r, g, b);
             } else {
                 return switch (colorStr.toUpperCase()) {
                     case "RED" -> Color.RED;
@@ -217,7 +221,7 @@ public class Items {
                     default -> Color.WHITE;
                 };
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return Color.WHITE;
         }
     }

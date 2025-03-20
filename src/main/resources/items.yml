@@ -11,12 +11,6 @@ items:
       FIRE_ASPECT: 2
     hide-enchants: false
 
-  golden_apple:
-    material: GOLDEN_APPLE
-    enchantments:
-      DAMAGE_ALL: 5
-      FIRE_ASPECT: 2
-
   head:
     material: PLAYER_HEAD
     head_url: "http://textures.minecraft.net/texture/d8147495c53cff5d52525cfec3be7067c5e434644f9f3c3e6865198306f979a4"
@@ -29,7 +23,7 @@ items:
   speed_potion:
     material: POTION #SPLASH_POTION, LINGERING_POTION
     amount: 1
-    color: white
+    color: white # RGB colore "R,G,B" -> "0,255,0" for Green
     display_name: "&dPotion of Speed"
     lore:
       - "&7It makes you faster!"
