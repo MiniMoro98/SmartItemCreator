@@ -45,17 +45,17 @@ public class Items {
                 materialName = Objects.requireNonNull(config.getString("items." + itemName + ".material")).replaceAll("&", "§");
             }
             //--------------------------------------HEAD---------------------------------
-             if(materialName.equalsIgnoreCase("PLAYER_HEAD")){
+            if (materialName.equalsIgnoreCase("PLAYER_HEAD")) {
                 String url = "http://textures.minecraft.net/texture/da99b05b9a1db4d29b5e673d77ae54a77eab66818586035c8a2005aeb810602a";
-                if(config.contains("items." + itemName + ".head_url")){
+                if (config.contains("items." + itemName + ".head_url")) {
                     url = config.getString("items." + itemName + ".head_url");
                 }
                 String name = "";
                 int amount = 1;
-                if(config.contains("items." + itemName + ".display_name")){
+                if (config.contains("items." + itemName + ".display_name")) {
                     name = Objects.requireNonNull(config.getString("items." + itemName + ".display_name")).replaceAll("&", "§");
                 }
-                if(config.contains("items." + itemName + ".amount")){
+                if (config.contains("items." + itemName + ".amount")) {
                     amount = config.getInt("items." + itemName + ".amount");
                 }
                 List<Component> lore = new ArrayList<>();
@@ -66,78 +66,78 @@ public class Items {
                     }
                 }
                 return new ItemStack(generateHead(url, name, lore, amount));
-            //------------------------------------POTION--------------------------------------
-            } else if(materialName.equalsIgnoreCase("POTION") || materialName.equalsIgnoreCase("SPLASH_POTION") || materialName.equalsIgnoreCase("LINGERING_POTION")){
-                 String name = "";
-                 int amount = 1;
-                 if(config.contains("items." + itemName + ".display_name")){
-                     name = Objects.requireNonNull(config.getString("items." + itemName + ".display_name")).replaceAll("&", "§");
-                 }
-                 if(config.contains("items." + itemName + ".amount")){
-                     amount = config.getInt("items." + itemName + ".amount");
-                 }
-                 String color = "";
-                 if(config.contains("items." + itemName + ".color")){
-                     color = config.getString("items." + itemName + ".color");
-                 }
-                 List<Component> lore = new ArrayList<>();
-                 if (config.contains("items." + itemName + ".lore")) {
-                     List<String> loreList = config.getStringList("items." + itemName + ".lore");
-                     for (String loreLine : loreList) {
-                         lore.add(Component.text(loreLine.replaceAll("&", "§")));
-                     }
-                 }
-                 Map<PotionEffectType, Integer> effects = getPotionEffects(itemName);
-                 Map<PotionEffectType, Integer> durations = getPotionDurations(itemName);
-                 Material type = Material.getMaterial(materialName);
-                 return createPotion(name, lore, effects, durations, type, amount, color);
+                //------------------------------------POTION--------------------------------------
+            } else if (materialName.equalsIgnoreCase("POTION") || materialName.equalsIgnoreCase("SPLASH_POTION") || materialName.equalsIgnoreCase("LINGERING_POTION")) {
+                String name = "";
+                int amount = 1;
+                if (config.contains("items." + itemName + ".display_name")) {
+                    name = Objects.requireNonNull(config.getString("items." + itemName + ".display_name")).replaceAll("&", "§");
+                }
+                if (config.contains("items." + itemName + ".amount")) {
+                    amount = config.getInt("items." + itemName + ".amount");
+                }
+                String color = "";
+                if (config.contains("items." + itemName + ".color")) {
+                    color = config.getString("items." + itemName + ".color");
+                }
+                List<Component> lore = new ArrayList<>();
+                if (config.contains("items." + itemName + ".lore")) {
+                    List<String> loreList = config.getStringList("items." + itemName + ".lore");
+                    for (String loreLine : loreList) {
+                        lore.add(Component.text(loreLine.replaceAll("&", "§")));
+                    }
+                }
+                Map<PotionEffectType, Integer> effects = getPotionEffects(itemName);
+                Map<PotionEffectType, Integer> durations = getPotionDurations(itemName);
+                Material type = Material.getMaterial(materialName);
+                return createPotion(name, lore, effects, durations, type, amount, color);
 
-            //-----------------------------------OTHER----------------------------------------
+                //-----------------------------------OTHER----------------------------------------
             } else {
-                 int amount = 1;
-                 if (config.contains("items." + itemName + ".amount")) {
-                     amount = config.getInt("items." + itemName + ".amount", 1);
-                 }
-                 Material material = Material.getMaterial(materialName.toUpperCase());
-                 if (material != null) {
-                     ItemStack item = new ItemStack(material, amount);
-                     ItemMeta meta = item.getItemMeta();
-                     if (meta != null) {
-                         if (config.contains("items." + itemName + ".display_name")) {
-                             String displayName = Objects.requireNonNull(config.getString("items." + itemName + ".display_name")).replaceAll("&", "§");
-                             meta.displayName(Component.text(displayName));
-                         }
-                         if (config.contains("items." + itemName + ".lore")) {
-                             List<String> loreList = config.getStringList("items." + itemName + ".lore");
-                             List<Component> lore = new ArrayList<>();
-                             for (String loreLine : loreList) {
-                                 lore.add(Component.text(loreLine.replaceAll("&", "§")));
-                             }
-                             meta.lore(lore);
-                         }
-                         if (config.contains("items." + itemName + ".enchantments")) {
-                             for (String enchantmentKey : Objects.requireNonNull(config.getConfigurationSection("items." + itemName + ".enchantments")).getKeys(false)) {
-                                 Enchantment enchantment = Enchantment.getByName(enchantmentKey);
-                                 if (enchantment != null) {
-                                     int level = config.getInt("items." + itemName + ".enchantments." + enchantmentKey);
-                                     meta.addEnchant(enchantment, level, true);
-                                 }
-                             }
-                         }
-                         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                         if (config.getBoolean("items." + itemName + ".hide-enchants")) {
-                             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                         }
-                         if (Bukkit.getBukkitVersion().startsWith("1_21") || Bukkit.getBukkitVersion().startsWith("1.21")) {
-                             NamespacedKey spaceKey = new NamespacedKey(SmartItemCreator.getInstance(), "attack_speed");
-                             AttributeModifier attackSpeedModifier = new AttributeModifier(spaceKey, 1.0, AttributeModifier.Operation.ADD_NUMBER);
-                             meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeedModifier);
-                         }
-                         item.setItemMeta(meta);
-                     }
-                     return item;
-                 }
-             }
+                int amount = 1;
+                if (config.contains("items." + itemName + ".amount")) {
+                    amount = config.getInt("items." + itemName + ".amount", 1);
+                }
+                Material material = Material.getMaterial(materialName.toUpperCase());
+                if (material != null) {
+                    ItemStack item = new ItemStack(material, amount);
+                    ItemMeta meta = item.getItemMeta();
+                    if (meta != null) {
+                        if (config.contains("items." + itemName + ".display_name")) {
+                            String displayName = Objects.requireNonNull(config.getString("items." + itemName + ".display_name")).replaceAll("&", "§");
+                            meta.displayName(Component.text(displayName));
+                        }
+                        if (config.contains("items." + itemName + ".lore")) {
+                            List<String> loreList = config.getStringList("items." + itemName + ".lore");
+                            List<Component> lore = new ArrayList<>();
+                            for (String loreLine : loreList) {
+                                lore.add(Component.text(loreLine.replaceAll("&", "§")));
+                            }
+                            meta.lore(lore);
+                        }
+                        if (config.contains("items." + itemName + ".enchantments")) {
+                            for (String enchantmentKey : Objects.requireNonNull(config.getConfigurationSection("items." + itemName + ".enchantments")).getKeys(false)) {
+                                Enchantment enchantment = Enchantment.getByName(enchantmentKey);
+                                if (enchantment != null) {
+                                    int level = config.getInt("items." + itemName + ".enchantments." + enchantmentKey);
+                                    meta.addEnchant(enchantment, level, true);
+                                }
+                            }
+                        }
+                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                        if (config.getBoolean("items." + itemName + ".hide-enchants")) {
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        }
+                        if (Bukkit.getBukkitVersion().startsWith("1_21") || Bukkit.getBukkitVersion().startsWith("1.21")) {
+                            NamespacedKey spaceKey = new NamespacedKey(SmartItemCreator.getInstance(), "attack_speed");
+                            AttributeModifier attackSpeedModifier = new AttributeModifier(spaceKey, 1.0, AttributeModifier.Operation.ADD_NUMBER);
+                            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeedModifier);
+                        }
+                        item.setItemMeta(meta);
+                    }
+                    return item;
+                }
+            }
         }
         return null;
     }
@@ -145,10 +145,10 @@ public class Items {
     static ItemStack generateHead(String url, String name, List<Component> lore, int amount) {
         ItemStack head = new ItemStack(head(url));
         ItemMeta meta = head.getItemMeta();
-        if(!name.equalsIgnoreCase("")){
+        if (!name.equalsIgnoreCase("")) {
             meta.displayName(Component.text(name));
         }
-        if(!lore.isEmpty()){
+        if (!lore.isEmpty()) {
             meta.lore(lore);
         }
         head.setItemMeta(meta);
@@ -173,33 +173,29 @@ public class Items {
     }
 
     public static ItemStack createPotion(String displayName, List<Component> lore, Map<PotionEffectType, Integer> effects, Map<PotionEffectType, Integer> durations, Material type, int amount, String color) {
-        if (type == null) {
-            throw new IllegalArgumentException("Il materiale deve essere una pozione valida (POTION, SPLASH_POTION, LINGERING_POTION)");
-        }
-        ItemStack potion = new ItemStack(type, amount);
-        PotionMeta meta = (PotionMeta) potion.getItemMeta();
-        if (meta != null) {
-            if (color != null && !color.isEmpty()) {
-                meta.setColor(getColorFromString(color));
-            }
-            if (displayName != null) {
-                meta.displayName(Component.text(displayName));
-            }
-            if (lore != null && !lore.isEmpty()) {
-                meta.lore(lore);
-            }
-            if (effects != null && !effects.isEmpty()) {
-                for (Map.Entry<PotionEffectType, Integer> entry : effects.entrySet()) {
-                    PotionEffectType effectType = entry.getKey();
-                    int amplifier = entry.getValue();
-                    int duration = durations.getOrDefault(effectType, 200);
-                    meta.addCustomEffect(new PotionEffect(effectType, duration, amplifier), true);
+            ItemStack potion = new ItemStack(type, amount);
+            PotionMeta meta = (PotionMeta) potion.getItemMeta();
+            if (meta != null) {
+                if (color != null && !color.isEmpty()) {
+                    meta.setColor(getColorFromString(color));
                 }
+                if (displayName != null) {
+                    meta.displayName(Component.text(displayName));
+                }
+                if (lore != null && !lore.isEmpty()) {
+                    meta.lore(lore);
+                }
+                if (effects != null && !effects.isEmpty()) {
+                    for (Map.Entry<PotionEffectType, Integer> entry : effects.entrySet()) {
+                        PotionEffectType effectType = entry.getKey();
+                        int amplifier = entry.getValue();
+                        int duration = durations.getOrDefault(effectType, 200);
+                        meta.addCustomEffect(new PotionEffect(effectType, duration, amplifier), true);
+                    }
+                }
+                potion.setItemMeta(meta);
             }
-            potion.setItemMeta(meta);
-        }
-
-        return potion;
+            return potion;
     }
 
     public static Color getColorFromString(String colorStr) {

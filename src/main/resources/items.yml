@@ -4,7 +4,7 @@ items:
     amount: 1
     display_name: "§bMagic Sword"
     lore:
-      - "§7The legendary sword"
+      - "§eThe legendary sword"
       - "§eForge of the Ancients"
     enchantments:
       DAMAGE_ALL: 5
@@ -18,7 +18,6 @@ items:
     display_name: "&a&lCustom Head"
     lore:
       - "&eLore"
-      - "&5Example"
 
   speed_potion:
     material: POTION #SPLASH_POTION, LINGERING_POTION

@@ -4,6 +4,11 @@ main: it.moro.smartitem.SmartItemCreator
 api-version: '1.13'
 commands:
   smartitemcreator:
-    description: Un comando di test
-    usage: /smartitemcreator
+    description: Command for give items
+    usage: /smartitemcreator <item> <player>
     aliases: [sic, smartitem]
+
+permissions:
+  smartitemcreator.cmd:
+    description: Permission for give items.
+    default: op

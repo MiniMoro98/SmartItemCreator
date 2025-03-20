@@ -1,2 +1,7 @@
 message:
-  "§cSolo i giocatori possono eseguire questo comando!"
+  correct-use: "&cCorrect use: /sic <item> <player>"
+  item-received: "&aYou have received the item: %item%"
+  item-received-console: "&a%player% received %item%"
+  item-not-found: "&cItem not found: %item%"
+  no-permission: "&cYou do not have permission for this command!"
+  player-not-found: "&cPlayer not found!"
