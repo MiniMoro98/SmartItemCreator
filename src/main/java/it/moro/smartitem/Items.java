@@ -125,8 +125,10 @@ public class Items {
                             }
                         }
                         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                        if (config.getBoolean("items." + itemName + ".hide-enchants")) {
-                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        if(config.contains("items." + itemName + ".hide-enchants")){
+                            if (config.getBoolean("items." + itemName + ".hide-enchants")) {
+                                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                            }
                         }
                         if (Bukkit.getBukkitVersion().startsWith("1_21") || Bukkit.getBukkitVersion().startsWith("1.21")) {
                             NamespacedKey spaceKey = new NamespacedKey(SmartItemCreator.getInstance(), "attack_speed");
