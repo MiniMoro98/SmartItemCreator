@@ -2,10 +2,10 @@ items:
   magic_sword:
     material: DIAMOND_SWORD
     amount: 1
-    display_name: "§bMagic Sword"
+    display_name: "&bMagic Sword"
     lore:
-      - "§eThe legendary sword"
-      - "§eForge of the Ancients"
+      - "&eThe legendary sword"
+      - "&eForge of the Ancients"
     enchantments:
       DAMAGE_ALL: 5
       FIRE_ASPECT: 2
